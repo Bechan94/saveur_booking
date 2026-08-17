@@ -1,40 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SAVEUR — Бронирование столика
 
-## Getting Started
+Тестовое задание для позиции Trainee Frontend Developer (React / Next.js).
+Страница онлайн-бронирования столика: форма с валидацией и экран
+подтверждения.
 
-First, run the development server:
+## Стек
+
+React 18, Next.js 14 (Pages Router), TypeScript, CSS Modules, Vitest.
+
+## Запуск локально
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Приложение поднимется на [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Другие команды:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+npm run build   # production-сборка
+npm run start   # запуск production-сборки
+npm run lint    # ESLint
+npm run test    # unit-тесты валидации телефона (Vitest)
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Структура
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+src/
+  components/
+    BookingForm.tsx           // форма бронирования
+    ConfirmationScreen.tsx    // экран подтверждения
+  pages/
+    index.tsx                 // главная страница, переключает форму / подтверждение
+  types/
+    booking.ts                // типы BookingFormData, BookingStatus, слоты времени
+  utils/
+    validation.ts             // валидаторы полей + тесты в __tests__
+  styles/
+    globals.css, *.module.css
+```
 
-## Learn More
+## Какие решения были приняты
 
-To learn more about Next.js, take a look at the following resources:
+Валидация вынесена в отдельные чистые функции (`utils/validation.ts`) — каждое
+поле проверяется отдельно, поэтому их удобно переиспользовать и для onBlur, и
+для сабмита, и покрыть unit-тестами без рендера компонентов. Состояние формы
+и экрана подтверждения хранится в родительском `index.tsx` через один
+`BookingFormData | null`, а не через отдельный флаг «текущий экран» — это
+исключает рассинхронизацию данных между формой и подтверждением. Отправка
+формы имитируется через `setTimeout`, кнопка блокируется и показывает
+«Бронирую...» на время «запроса».
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Что бы я доделал при наличии времени
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Добавил бы e2e-тест на весь сценарий бронирования (Playwright), вынес бы
+общие стили инпутов в переиспользуемый `FormField`-компонент вместо
+дублирования разметки в `BookingForm.tsx`, и добавил бы более мягкую
+маску ввода телефона прямо во время набора (сейчас маска не форматирует
+ввод "на лету", только валидирует по blur/submit).
