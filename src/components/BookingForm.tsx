@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+
 import {
   BookingFormData,
   BookingFormErrors,
@@ -6,6 +7,7 @@ import {
   MIN_GUESTS,
   MAX_GUESTS,
 } from '@/types/booking';
+
 import {
   validateName,
   validatePhone,
@@ -14,6 +16,7 @@ import {
   validateGuests,
   validateBookingForm,
 } from '@/utils/validation';
+
 import styles from './BookingForm.module.css';
 
 interface BookingFormProps {
@@ -39,6 +42,7 @@ function getTodayDateString(): string {
 }
 
 function validateField(name: FieldName, data: BookingFormData): string | null {
+  
   switch (name) {
     case 'name':
       return validateName(data.name);
@@ -56,6 +60,7 @@ function validateField(name: FieldName, data: BookingFormData): string | null {
 }
 
 export default function BookingForm({ onSuccess }: BookingFormProps) {
+
   const [formData, setFormData] = useState<BookingFormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<BookingFormErrors>({});
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
@@ -112,7 +117,6 @@ export default function BookingForm({ onSuccess }: BookingFormProps) {
     }
 
     setIsSubmitting(true);
-    // Имитация отправки на сервер
     setTimeout(() => {
       setIsSubmitting(false);
       onSuccess(formData);

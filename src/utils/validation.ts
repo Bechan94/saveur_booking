@@ -6,9 +6,8 @@ import {
   TIME_SLOTS,
 } from '@/types/booking';
 
-/**
- * Возвращает сегодняшнюю дату в формате YYYY-MM-DD (локальное время).
- */
+
+
 function getTodayDateString(): string {
   const now = new Date();
   const year = now.getFullYear();
@@ -28,10 +27,8 @@ export function validateName(value: string): string | null {
   return null;
 }
 
-/**
- * Российский номер телефона: +7XXXXXXXXXX или 8XXXXXXXXXX (10 цифр после кода страны).
- * Пробелы, скобки и дефисы допускаются во входной строке и удаляются перед проверкой.
- */
+
+
 export function validatePhone(value: string): string | null {
   if (!value.trim()) {
     return 'Введите номер телефона';

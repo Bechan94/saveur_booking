@@ -6,15 +6,15 @@ export interface BookingFormData {
   guests: number;
 }
 
-// Состояние формы
-export type BookingStatus = 'idle' | 'loading' | 'success';
+
+export type BookingStatus = "idle" | "loading" | "success";
 
 export type BookingFormErrors = Partial<Record<keyof BookingFormData, string>>;
 
 export const TIME_SLOTS: string[] = [
-  '12:00',
-  '13:00',
-  '14:00',
+  "12:00",
+  "13:00",
+  "14:00",
   '15:00',
   '16:00',
   '17:00',

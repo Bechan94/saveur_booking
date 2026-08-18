@@ -1,8 +1,11 @@
 import { useState } from 'react';
+
 import Head from 'next/head';
+
 import BookingForm from '@/components/BookingForm';
 import ConfirmationScreen from '@/components/ConfirmationScreen';
 import { BookingFormData } from '@/types/booking';
+
 import styles from '@/styles/Home.module.css';
 
 export default function Home() {
